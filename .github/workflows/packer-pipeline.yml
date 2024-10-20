@@ -24,10 +24,16 @@ jobs:
       # Set up Google Cloud credentials
       - name: Set up GCP credentials
         uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-          export_default_credentials: true
+        run: |
+          gcloud auth activate-service-account --key-file=${{ secrets.GCP_CREDENTIALS }}
+        # with:
+        #   project_id: ${{ secrets.GCP_PROJECT_ID }}
+        #   service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+        #   export_default_credentials: true
+      - name: Check GCP Authentication
+        run: |
+          gcloud auth list
+          gcloud config list
 
       # Install Packer
       - name: Install Packer
