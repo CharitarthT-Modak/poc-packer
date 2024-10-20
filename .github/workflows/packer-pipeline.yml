@@ -1,0 +1,55 @@
+# .github/workflows/packer-pipeline.yml code
+name: Packer GCP Image Build
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'  # This triggers the workflow on any tag push
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  packer-build:
+    name: Packer Build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Google Cloud credentials
+      - name: Set up GCP credentials
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          export_default_credentials: true
+
+      # Install Packer
+      - name: Install Packer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          curl -LO https://releases.hashicorp.com/packer/1.9.1/packer_1.9.1_linux_amd64.zip
+          unzip packer_1.9.1_linux_amd64.zip
+          sudo mv packer /usr/local/bin/
+          packer --version
+
+      # Initialize Packer
+      - name: Initialize Packer
+        run: |
+          packer init .
+
+      # Validate Packer configuration
+      - name: Validate Packer
+        run: |
+          packer validate -var-file=variables.pkrvars.hcl .
+
+      # Build Packer image
+      - name: Build Packer
+        run: |
+          packer build -var-file=variables.pkrvars.hcl .
