@@ -54,13 +54,17 @@ jobs:
       - name: Initialize Packer
         run: |
           packer init .
-
+      -name: Checking working directory
+        run: |
+          pwd
+          echo $GITHUB_WORKSPACE
+          cat $GITHUB_WORKSPACE/variables.pkr.hcl
       # Validate Packer configuration
       - name: Validate Packer
         run: |
-          packer validate -var-file=$GITHUB_WORKSPACE/variables.pkrvars.hcl .
+          packer validate -var-file=variables.pkrvars.hcl .
 
       # Build Packer image
       - name: Build Packer
         run: |
-          packer build -var-file=$GITHUB_WORKSPACE/variables.pkrvars.hcl .
+          packer build -var-file=variables.pkrvars.hcl .
