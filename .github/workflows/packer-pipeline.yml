@@ -58,7 +58,7 @@ jobs:
         run: |
           pwd
           echo $GITHUB_WORKSPACE
-          cat $GITHUB_WORKSPACE/variables.pkr.hcl
+          cat $GITHUB_WORKSPACE/variables.pkrvars.hcl
       # Validate Packer configuration
       - name: Validate Packer
         run: |
