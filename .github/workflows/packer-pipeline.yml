@@ -1,4 +1,5 @@
-# .github/workflows/packer-pipeline.yml code
+# .github/workflow/packer-pipeline.yml
+
 name: Packer GCP Image Build
 
 on:
@@ -21,15 +22,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Google Cloud credentials
-      - name: Set up GCP credentials
+      # Authenticate with Google Cloud
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Set up Google Cloud SDK
+      - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
-        # run: |
-        #   gcloud auth activate-service-account --key-file=${{ secrets.GCP_CREDENTIALS }}
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-          export_default_credentials: true
+
+      # Check GCP Authentication
       - name: Check GCP Authentication
         run: |
           gcloud auth list
