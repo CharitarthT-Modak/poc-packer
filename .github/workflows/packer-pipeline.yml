@@ -58,9 +58,9 @@ jobs:
       # Validate Packer configuration
       - name: Validate Packer
         run: |
-          packer validate -var-file=variables.pkrvars.hcl .
+          packer validate -var-file=./variables.pkrvars.hcl .
 
       # Build Packer image
       - name: Build Packer
         run: |
-          packer build -var-file=variables.pkrvars.hcl .
+          packer build -var-file=./variables.pkrvars.hcl .
