@@ -54,7 +54,7 @@ jobs:
       - name: Initialize Packer
         run: |
           packer init .
-      -name: Checking working directory
+      - name: Checking working directory
         run: |
           pwd
           echo $GITHUB_WORKSPACE
