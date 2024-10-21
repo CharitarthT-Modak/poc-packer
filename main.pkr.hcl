@@ -36,8 +36,8 @@ build {
   provisioner "shell" {
     inline = [
       "sudo chmod +x /tmp/script.sh",
-      "sudo /tmp/script.sh"
+      "sudo /tmp/script.sh",
+      "sudo rm -rf /tmp/script.sh"
     ]
   }
 }
-# this is some code 

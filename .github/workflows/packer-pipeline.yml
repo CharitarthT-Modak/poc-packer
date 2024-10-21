@@ -7,7 +7,7 @@ on:
     branches:
       - main
     tags:
-      - '*'  # This triggers the workflow on any tag push
+      - '*'  
   pull_request:
     branches:
       - main
@@ -29,18 +29,18 @@ jobs:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       # Set up Google Cloud SDK
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      # - name: Set up Google Cloud SDK
+      #   uses: google-github-actions/setup-gcloud@v1
+      #   with:
+      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      # Check GCP Authentication
-      - name: Check GCP Authentication
-        run: |
-          gcloud auth list
-          gcloud config list
+      # # Checking GCP Authentication
+      # - name: Check GCP Authentication
+      #   run: |
+      #     gcloud auth list
+      #     gcloud config list
 
-      # Install Packer
+      # Installing Packer
       - name: Install Packer
         run: |
           sudo apt-get update
@@ -50,25 +50,16 @@ jobs:
           sudo mv packer /usr/local/bin/
           packer --version
 
-      # Initialize Packer
+      # Packer init
       - name: Initialize Packer
         run: |
           packer init .
-      - name: Checking working directory
-        run: |
-          echo $GITHUB_WORKSPACE
-          cat $GITHUB_WORKSPACE/variables.pkrvars.hcl
-      # list contents of workspace
-      - name: List workspace contents
-        run: |
-          echo "Listing workspace contents..."
-          ls -al
-      # Validate Packer configuration
+      # Packer validate 
       - name: Validate Packer
         run: |
           packer validate -var-file=variables.pkrvars.hcl .
 
-      # Build Packer image
+      # Packer build
       - name: Build Packer
         run: |
           packer build -var-file=variables.pkrvars.hcl .
