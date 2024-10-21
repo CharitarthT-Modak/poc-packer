@@ -1,5 +1,5 @@
 #!/bin/bash
-# Function to install Docker
+
 install_docker() {
     echo "Installing Docker..."
     sudo apt-get update
@@ -17,8 +17,7 @@ install_docker() {
     sudo apt-get update
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-    # # Verify Docker installation
-    # sudo docker run hello-world
+    sudo docker run hello-world
 }
 
 # Function to install gcloud CLI
@@ -64,8 +63,6 @@ install_azure_cli() {
     echo "Installing Azure CLI..."
     curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 }
-
-# Main function to call individual installation functions
 main() {
     install_docker
     install_gcloud
@@ -74,5 +71,4 @@ main() {
     install_azure_cli
 }
 
-# Execute the main function
 main

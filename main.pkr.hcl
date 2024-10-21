@@ -15,7 +15,7 @@ source "googlecompute" "ubuntu" {
   image_family        = "yeedu-ubuntu"
   ssh_username        = "packer"
   machine_type        = "e2-medium"
-  disk_size           = 20
+  disk_size           = 50
   disk_type           = "pd-standard"
   preemptible         = false
 
