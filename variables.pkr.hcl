@@ -4,11 +4,11 @@ variable "project_id" {
 }
 
 variable "source_image_family" {
-  type    = string
+  type = string
 }
 
 variable "image_name" {
-  type    = string
+  type = string
 }
 
 variable "zone" {

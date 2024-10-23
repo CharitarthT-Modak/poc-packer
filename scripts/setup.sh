@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -exuo pipefail
+echo "startup script detected"
 install_docker() {
     echo "Installing Docker..."
     sudo apt-get update

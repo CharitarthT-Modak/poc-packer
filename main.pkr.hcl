@@ -18,6 +18,7 @@ source "googlecompute" "ubuntu" {
   disk_size           = 50
   disk_type           = "pd-standard"
   preemptible         = false
+  startup_script_file = "scripts/setup.sh"
 
   image_labels = {
     poc       = "packer"
@@ -28,16 +29,16 @@ source "googlecompute" "ubuntu" {
 build {
   sources = ["source.googlecompute.ubuntu"]
 
-  provisioner "file" {
-    source      = "script.sh"
-    destination = "/tmp/"
-  }
+  # provisioner "file" {
+  #   source      = "script.sh"
+  #   destination = "/tmp/"
+  # }
 
-  provisioner "shell" {
-    inline = [
-      "sudo chmod +x /tmp/script.sh",
-      "sudo /tmp/script.sh",
-      "sudo rm -rf /tmp/script.sh"
-    ]
-  }
+  # provisioner "shell" {
+  #   inline = [
+  #     "sudo chmod +x /tmp/script.sh",
+  #     "sudo /tmp/script.sh",
+  #     "sudo rm -rf /tmp/script.sh"
+  #   ]
+  # }
 }
