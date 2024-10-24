@@ -1,3 +1,4 @@
+# main.pkr.hcl
 packer {
   required_plugins {
     googlecompute = {
@@ -13,11 +14,14 @@ source "googlecompute" "ubuntu" {
   zone                = var.zone
   image_name          = var.image_name
   image_family        = "yeedu-ubuntu"
-  ssh_username        = "packer"
+  ssh_username        = "yeedu"
   machine_type        = "e2-medium"
   disk_size           = 50
   disk_type           = "pd-standard"
-  preemptible         = false
+  network_project_id  = "modak-nabu"
+  network             = "modak-nabu-spark-vpc"
+  subnetwork          = "custom-subnet-modak-nabu"
+  use_internal_ip     = true
   startup_script_file = "scripts/setup.sh"
 
   image_labels = {
@@ -26,19 +30,8 @@ source "googlecompute" "ubuntu" {
   }
 }
 
+
+
 build {
   sources = ["source.googlecompute.ubuntu"]
-
-  # provisioner "file" {
-  #   source      = "script.sh"
-  #   destination = "/tmp/"
-  # }
-
-  # provisioner "shell" {
-  #   inline = [
-  #     "sudo chmod +x /tmp/script.sh",
-  #     "sudo /tmp/script.sh",
-  #     "sudo rm -rf /tmp/script.sh"
-  #   ]
-  # }
 }

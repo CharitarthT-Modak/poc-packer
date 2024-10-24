@@ -1,5 +1,5 @@
+# scripts/setup.sh
 #!/bin/bash
-
 set -exuo pipefail
 echo "startup script detected"
 install_docker() {
@@ -19,7 +19,12 @@ install_docker() {
     sudo apt-get update
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-    sudo docker run hello-world
+    # sudo docker run hello-world
+    sudo gcloud auth configure-docker us.gcr.io --quiet
+    sudo docker pull us.gcr.io/modak-nabu/yeedu_cfe:v2.9.5-rc1
+    sudo docker pull us.gcr.io/modak-nabu/yeedu_reactive_actors:v4.13.1-rc15
+    sudo docker pull us.gcr.io/modak-nabu/yeedu_spark:v3.4.3-rc2
+    sudo docker pull us.gcr.io/modak-nabu/yeedu_telegraf:1.28.2
 }
 
 # Function to install gcloud CLI

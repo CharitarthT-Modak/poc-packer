@@ -5,12 +5,12 @@ name: Packer GCP Image Build
 on:
   push:
     branches:
-      - main
+      # - main
     tags:
-      - '*'  
+      # - '*'  
   pull_request:
     branches: 
-      - main
+      # - main
 
 jobs:
   packer-build:
@@ -27,18 +27,6 @@ jobs:
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-
-      # Set up Google Cloud SDK
-      # - name: Set up Google Cloud SDK
-      #   uses: google-github-actions/setup-gcloud@v1
-      #   with:
-      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-      # # Checking GCP Authentication
-      # - name: Check GCP Authentication
-      #   run: |
-      #     gcloud auth list
-      #     gcloud config list
 
       # Installing Packer
       - name: Install Packer
